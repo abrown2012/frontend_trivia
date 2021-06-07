@@ -63,7 +63,7 @@ const currentUserID = (json, randomQuestions) => {
     const data = {
         user_id: json[json.length-1].id
     }
-    debugger 
+    
     fetch("http://localhost:3000/quizzes", {
         method: 'POST',
         headers: {
@@ -92,6 +92,10 @@ const addQuestions = (json, questions) => {
 }
 
 const handleStartQuiz = () => {
-    debugger
-    console.log("Your trivia just started")
+    questionText().classList.remove('hide')
+    askQuestion()
+}
+
+const askQuestion = () => {
+
 }
