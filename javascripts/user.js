@@ -1,7 +1,18 @@
 class User {
-    constructor(user){
-        this.name = user.name
-        this.id = user.id
-        User.currentUser = this 
+    
+    static all = []
+
+    constructor({name, id, quizzes = []}){
+        this.name = name
+        this.id = id 
+        this.quizzes = quizzes 
+        User.all.push(this) 
     }
+
+    static getAll() {
+        return this.all 
+    }
+
+    
+
 }
