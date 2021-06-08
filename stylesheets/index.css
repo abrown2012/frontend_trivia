@@ -1,3 +1,49 @@
 .hide {
     display: none;
 }
+
+body {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background-color: rgb(192, 139, 241);
+    font-family: Monaco;
+}
+
+.welcome {
+    width: 400px;
+    max-width: 80%;
+    border-radius: 5px;
+    background-color: cornsilk;
+    padding: 10px;
+    box-shadow: 0 0 10px 2px;
+    display: grid;
+    align-content: center;
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: rgb(192, 139, 241);
+    font-family: Monaco;
+    width: 82%;
+    height: 35%;
+}
+
+.user-name {
+    width: 80%;
+    height: 25%;
+    font-family: Monaco;
+}
+
+#start {
+    background-color: rgb(192, 139, 241);
+    font-family: Monaco;
+    width: 95%;
+    height: 120%;
+    align-content: center;
+    text-align: center;
+}

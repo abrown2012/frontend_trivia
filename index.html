@@ -8,30 +8,39 @@
     <link rel="stylesheet" href="stylesheets/index.css">
 </head>
 <body>
-    <h1 id="page-title">Welcome to Trivia!</h1>
-    <h2 id="subtitle">Enter your name:</h2>
-    <div class='name-form' id = 'name-form'>
-        <input type="text" id="user-name"><br/><br>
-        <button id="start-trivia">Submit</button>
-          <div id="quiz">
-          </div>  
-        </div>
-    <div id="question-container" >
-        <div id="question" class="hide">Qeustion TEST</div>
-        <div id="answers" class="hide">
-            <button class="btn">TEST 1</button>
-            <button class="btn">TEST 1</button>
-            <button class="btn">TEST 1</button>
-            <button class="btn">TEST 1</button>
-        </div>
+    <div class="welcome">
+        <h1 id="page-title">Welcome to Trivia!</h1><br>
+        
+        <h2 id="subtitle">Please enter your name:</h2>
+        <div class='name-form' id = 'name-form'>
+            <input type="text" id="user-name" class="user-name"><br/><br>
+            <button id="start-trivia" class="submit-btn">Submit</button><br>
+            <br>
+            <div id="quiz">
+            </div>  
+        </div><br>
         <div id="start-button" class="hide">
             <button id="start">Start</button>
         </div>
-        <div id="next-button" class="hide">
-            <button id="next" >Next TEST</button>
+        <br>
+        <br>
+        <div id="question-container" >
+            <div id="question" class="hide">Question TEST</div>
+            <div id="answers" class="hide">
+                <button class="btn">TEST 1</button>
+                <button class="btn">TEST 2</button>
+                <button class="btn">TEST 3</button>
+                <button class="btn">TEST 4</button>
+            </div>
+    
+            <div id="next-button" class="hide">
+                <button id="next" >Next TEST</button>
+            </div>
         </div>
     </div>
+
     <script src="javascripts/index.js"></script>
+    <script src="javascripts/services/answerApi.js"></script>
    
 </body>
 </html>

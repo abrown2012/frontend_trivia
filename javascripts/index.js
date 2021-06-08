@@ -9,6 +9,7 @@ const questionElement = () => document.getElementById("question")
 const answersElement = () => document.getElementById("answers")
 const startButton = () => document.getElementById("start-button")
 const start = () => document.getElementById("start")
+const next = () => document.getElementById("next-button")
 let questionNumber
 
 
@@ -38,9 +39,7 @@ const handleWelcomeUser = (name) => {
     nameForm().innerHTML = ""
     startButton().classList.remove('hide')
     start().addEventListener("click", startTrivia)
-    
-    // handleCreateQuiz()
-    // handleStartQuiz()
+
 }
 
 const startTrivia = (e) => {
@@ -54,6 +53,7 @@ const startTrivia = (e) => {
 }
 
 const nextQuestion = () => {
+    clearPreviousQuestion()
     questionNumber = 0 
     fetch('http://localhost:3000/questions')
     .then(resp => resp.json())
@@ -64,4 +64,41 @@ const nextQuestion = () => {
 
 const displayQuestion = (question) => {
     questionElement().innerText = question.text
+    fetch(`http://localhost:3000/questions/${question.id}`)
+        .then(resp => resp.json())
+        .then(json => {getAnswers(json.id)})
+}
+
+const getAnswers = (questionID) => {
+    fetch(`http://localhost:3000/answers`)
+    .then(resp => resp.json())
+    .then(json => {json.forEach(
+        answer => {
+            if (answer.question_id === questionID) {
+                const button = document.createElement('button')
+                button.innerText = answer.text 
+                button.classList.add('btn')
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct 
+                }
+                button.addEventListener('click', selectAnswer)
+                answersElement().appendChild(button)
+            }
+        }
+    )}
+    )
+}
+
+function selectAnswer(e) {
+    const selectedAnswer = e.target 
+    const correct = selectedAnswer.dataset.correct
+    debugger
+}
+
+const clearPreviousQuestion = () => {
+    next().classList.add('hide')
+    
+    while (answersElement().firstChild){
+        answersElement().removeChild(answersElement().firstChild)
+    }
 }
