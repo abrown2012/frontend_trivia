@@ -10,6 +10,7 @@ const answersElement = () => document.getElementById("answers")
 const startButton = () => document.getElementById("start-button")
 const start = () => document.getElementById("start")
 const next = () => document.getElementById("next-button")
+const welcome = () => document.getElementById("welcome")
 let questionNumber
 
 
@@ -47,6 +48,7 @@ const startTrivia = (e) => {
     startButton().classList.add('hide')
     pageTitle().innerText = ``
     subtitle().innerText = ""
+    welcome().classList.add('hide')
     questionElement().classList.remove('hide')
     answersElement().classList.remove('hide')
     nextQuestion() 
@@ -90,9 +92,7 @@ const getAnswers = (questionID) => {
 }
 
 function selectAnswer(e) {
-    const selectedAnswer = e.target 
-    const correct = selectedAnswer.dataset.correct
-    debugger
+
 }
 
 const clearPreviousQuestion = () => {

@@ -14,7 +14,7 @@ body {
     font-family: Monaco;
 }
 
-.welcome {
+#welcome {
     width: 400px;
     max-width: 80%;
     border-radius: 5px;
@@ -47,3 +47,5 @@ body {
     align-content: center;
     text-align: center;
 }
+
+
