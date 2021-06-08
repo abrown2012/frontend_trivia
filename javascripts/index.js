@@ -92,7 +92,7 @@ const getAnswers = (questionID) => {
 }
 
 function selectAnswer(e) {
-
+    debugger
 }
 
 const clearPreviousQuestion = () => {
