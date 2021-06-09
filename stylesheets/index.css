@@ -14,9 +14,10 @@ body {
     font-family: Monaco;
 }
 
-#welcome {
+.welcome {
     width: 400px;
     max-width: 80%;
+    height: auto;
     border-radius: 5px;
     background-color: cornsilk;
     padding: 10px;

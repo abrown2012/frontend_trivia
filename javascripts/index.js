@@ -20,21 +20,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 const handleSubmit = (e) => {
     e.preventDefault()
-    const data = {
-        name: userName().value
-    }
-    fetch("http://localhost:3000/users", {
-        method: 'POST',
-        headers: {
-            "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(resp => resp.json())
-    .then(json => handleWelcomeUser(json.name))
+    UserApi.fetchUser()
 }
 
 const handleWelcomeUser = (name) => {
+    // UserApi.fetchUsers()
     pageTitle().innerText = `Welcome, ${name}!`
     subtitle().innerText = "Let's play a game of Trivia"
     nameForm().innerHTML = ""
@@ -49,6 +39,23 @@ const startTrivia = (e) => {
     pageTitle().innerText = ``
     subtitle().innerText = ""
     welcome().classList.add('hide')
+    welcome().innerHTML = ""
+    welcome().innerHTML = 
+    `
+    <div id="question-container" >
+    <div id="question" class="hide">Question TEST</div>
+    <div id="answers" class="hide">
+        <button class="btn">TEST 1</button>
+        <button class="btn">TEST 2</button>
+        <button class="btn">TEST 3</button>
+        <button class="btn">TEST 4</button>
+    </div>
+
+    <div id="next-button" class="hide">
+        <button id="next" >Next TEST</button>
+    </div>
+</div>
+    `
     questionElement().classList.remove('hide')
     answersElement().classList.remove('hide')
     nextQuestion() 
@@ -60,6 +67,7 @@ const nextQuestion = () => {
     fetch('http://localhost:3000/questions')
     .then(resp => resp.json())
     .then(json => json.sort(() => Math.random() - 0.5))
+    .then(tenOnly => tenOnly.slice(0, 10))
     .then(quest => {displayQuestion(quest[questionNumber])})
     
 }
@@ -97,7 +105,6 @@ function selectAnswer(e) {
 
 const clearPreviousQuestion = () => {
     next().classList.add('hide')
-    
     while (answersElement().firstChild){
         answersElement().removeChild(answersElement().firstChild)
     }
