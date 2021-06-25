@@ -13,7 +13,7 @@ const next = () => document.getElementById("next-button")
 const welcome = () => document.getElementById("welcome")
 const checkAnswer = () => document.getElementById("answer-text")
 const nextButton = () => document.getElementById("next")
-let questionNumber 
+let questionNumber = -1
 
 
 
@@ -79,41 +79,39 @@ const startTrivia = (e) => {
 
 
 const nextQuestion = () => {
-    
-    questionNumber = 0 
-    fetch('http://localhost:3000/questions')
+    fetch('http://localhost:3000/quiz_questions')
     .then(resp => resp.json())
-    .then(json => json.sort(() => Math.random() - 0.5))
-    // .then(tenOnly => tenOnly.slice(0, 10))
-    .then(quest => {
-        setQuestion(quest)
-        })
+    .then(json => {setQuestion(json.slice(-5))
+    })
 }
 
-function setQuestion(question) {
+function setQuestion(questions) {
+    questionNumber++
     clearPreviousQuestion()
-    displayQuestion(question[questionNumber])
-    
+    displayQuestion(questions[questionNumber])
 }
 
 function displayQuestion(question) {
-    
-    questionElement().innerText = question.text
-    
-    fetch(`http://localhost:3000/questions/${question.id}`)
+    fetch(`http://localhost:3000/questions/${question.question_id}`)
         .then(resp => resp.json())
-        .then(json => {json.answers.forEach(answer =>
-     {       {   
-                const button = document.createElement('button')
-                button.innerText = answer.text 
-                button.classList.add('btn')
-                if (answer.correct) {
-                    button.dataset.correct = answer.correct 
+        .then(json => {
+            questionElement().innerText = json.text
+                json.answers.forEach(answer =>
+                {{
+                    const button = document.createElement('button')
+                    button.innerText = answer.text 
+                    button.classList.add('btn')
+                    if (answer.correct) {
+                        button.dataset.correct = answer.correct 
+                            }
+                    
+                    button.addEventListener('click', selectAnswer)
+                    answersElement().appendChild(button)
                 }
-                button.addEventListener('click', selectAnswer)
-                answersElement().appendChild(button)
-                
-            }})})
+            })
+        debugger}
+            
+    )
 }
 
 
@@ -121,8 +119,7 @@ function displayQuestion(question) {
 function selectAnswer(e) {
     const selectedAnswer = e.target
     const correct = selectedAnswer.dataset.correct
-    
-    
+
     if (selectedAnswer.dataset.correct) {
         checkAnswer().innerText = `Congratualtions, this is the correct answer!`
     } else {
@@ -130,9 +127,9 @@ function selectAnswer(e) {
     }
     
     next().classList.remove('hide')
-    nextButton().addEventListener("click", () => {
+    nextButton().addEventListener("click", (e) => {
+        e.preventDefault()
         checkAnswer().innerText = ""
-        questionNumber++
         
         nextQuestion()
     })
@@ -142,7 +139,7 @@ function selectAnswer(e) {
 
 const clearPreviousQuestion = () => {
     next().classList.add('hide')
-    
+    questionElement().innerText = ''
     while (answersElement().firstChild){
         answersElement().removeChild(answersElement().firstChild)
     }

@@ -12,7 +12,7 @@ class QuizApi {
 
 
     static saveQuiz(userId) {
-
+        
         const quizData = {
             user_id: userId
         }

@@ -11,18 +11,19 @@ class QuestionApi {
         .then(tenOnly => tenOnly.slice(0, 5))
         .then(json => {
             json.forEach(question => {
-                QuestionApi.createQuizQuestions(question, User.all[1].id)
+                let quizId = User.all[1].id
+                QuestionApi.createQuizQuestions(question.id, quizId)
             })
         })
     }
 
-    static createQuizQuestions(question, userId) {
+    static createQuizQuestions(questionId, userId) {
         
         const quizQuestionData = {
             quiz_id: userId,
-            question_id: question.id
+            question_id: questionId
         }
-        
+
         fetch("http://localhost:3000/quiz_questions", {
             method: 'POST',
             headers: {
