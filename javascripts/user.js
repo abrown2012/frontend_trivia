@@ -13,18 +13,14 @@ class User {
         return this.all 
     }
 
-    static findOrCreateByName(user){
-        this.findByName(user.name) || new User(user) 
+    static findOrCreateByName(name){
+        
+        this.findByName(name) || new User(name) 
     }
 
     static findByName(name){
+        
         return this.all.find(user => user.name === name)
     }
-
-    
-
-
-
-    
-
+  
 }

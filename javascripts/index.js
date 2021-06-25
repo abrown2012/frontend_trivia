@@ -11,7 +11,10 @@ const startButton = () => document.getElementById("start-button")
 const start = () => document.getElementById("start")
 const next = () => document.getElementById("next-button")
 const welcome = () => document.getElementById("welcome")
-let questionNumber
+const checkAnswer = () => document.getElementById("answer-text")
+const nextButton = () => document.getElementById("next")
+let questionNumber 
+
 
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -21,6 +24,10 @@ document.addEventListener("DOMContentLoaded", () =>{
 const handleSubmit = (e) => {
     e.preventDefault()
     UserApi.fetchUser()
+    Quiz.createNewQuiz()
+    QuestionApi.fetch5Questions()
+    handleWelcomeUser(userName().value)
+    
 }
 
 const handleWelcomeUser = (name) => {
@@ -42,49 +49,61 @@ const startTrivia = (e) => {
     welcome().innerHTML = ""
     welcome().innerHTML = 
     `
+    
     <div id="question-container" >
+    
     <div id="question" class="hide">Question TEST</div>
+    
     <div id="answers" class="hide">
-        <button class="btn">TEST 1</button>
-        <button class="btn">TEST 2</button>
-        <button class="btn">TEST 3</button>
-        <button class="btn">TEST 4</button>
+    
+        <button class="btn"></button>
+        <button class="btn"></button>
+        <button class="btn"></button>
+        <button class="btn"></button>
     </div>
-
+    <br>
+    <div id="answer-text"></div>
+    
+    <br>
     <div id="next-button" class="hide">
-        <button id="next" >Next TEST</button>
+        <button id="next">Next</button>
     </div>
 </div>
     `
     questionElement().classList.remove('hide')
     answersElement().classList.remove('hide')
+    clearPreviousQuestion()
     nextQuestion() 
 }
 
+
+
 const nextQuestion = () => {
-    clearPreviousQuestion()
+    
     questionNumber = 0 
     fetch('http://localhost:3000/questions')
     .then(resp => resp.json())
     .then(json => json.sort(() => Math.random() - 0.5))
-    .then(tenOnly => tenOnly.slice(0, 10))
-    .then(quest => {displayQuestion(quest[questionNumber])})
+    // .then(tenOnly => tenOnly.slice(0, 10))
+    .then(quest => {
+        setQuestion(quest)
+        })
+}
+
+function setQuestion(question) {
+    clearPreviousQuestion()
+    displayQuestion(question[questionNumber])
     
 }
 
-const displayQuestion = (question) => {
+function displayQuestion(question) {
+    
     questionElement().innerText = question.text
+    
     fetch(`http://localhost:3000/questions/${question.id}`)
         .then(resp => resp.json())
-        .then(json => {getAnswers(json.id)})
-}
-
-const getAnswers = (questionID) => {
-    fetch(`http://localhost:3000/answers`)
-    .then(resp => resp.json())
-    .then(json => {json.forEach(
-        answer => {
-            if (answer.question_id === questionID) {
+        .then(json => {json.answers.forEach(answer =>
+     {       {   
                 const button = document.createElement('button')
                 button.innerText = answer.text 
                 button.classList.add('btn')
@@ -93,19 +112,39 @@ const getAnswers = (questionID) => {
                 }
                 button.addEventListener('click', selectAnswer)
                 answersElement().appendChild(button)
-            }
-        }
-    )}
-    )
+                
+            }})})
 }
 
+
+
 function selectAnswer(e) {
-    debugger
+    const selectedAnswer = e.target
+    const correct = selectedAnswer.dataset.correct
+    
+    
+    if (selectedAnswer.dataset.correct) {
+        checkAnswer().innerText = `Congratualtions, this is the correct answer!`
+    } else {
+        checkAnswer().innerText = `This answer is wrong.`
+    }
+    
+    next().classList.remove('hide')
+    nextButton().addEventListener("click", () => {
+        checkAnswer().innerText = ""
+        questionNumber++
+        
+        nextQuestion()
+    })
 }
+
+
 
 const clearPreviousQuestion = () => {
     next().classList.add('hide')
+    
     while (answersElement().firstChild){
         answersElement().removeChild(answersElement().firstChild)
     }
+    
 }

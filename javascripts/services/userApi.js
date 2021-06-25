@@ -20,6 +20,7 @@ class UserApi {
         const data = {
             name: userName().value
         }
+        
         fetch("http://localhost:3000/users", {
             method: 'POST',
             headers: {
@@ -30,7 +31,6 @@ class UserApi {
         .then(resp => resp.json())
         .then(json => {
             User.findOrCreateByName(json)
-            handleWelcomeUser(json.name)
         })
     }
     
