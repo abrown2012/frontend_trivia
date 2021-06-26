@@ -90,7 +90,7 @@ function setQuestion(questions) {
 }
 
 function displayQuestion(question) {
-    
+    if (questionNumber < 5) {
     questionElement().innerText = question.text
     question.findAnswers().forEach(answer => {
         const button = document.createElement('button')
@@ -102,7 +102,9 @@ function displayQuestion(question) {
         button.addEventListener('click', selectAnswer)
         answersElement().appendChild(button)
     })
-    
+    } else {
+    questionElement().innerText = "Congratulations, you finished the quiz. Your score is: "
+    }
 }
 
 function selectAnswer(e) {
