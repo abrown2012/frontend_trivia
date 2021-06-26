@@ -5,8 +5,7 @@ class UserApi {
         .then(json => {
             json.forEach(user => {
                 User.findOrCreateByName(user)
-            })
-            
+            }) 
         })
         .catch(this.handleError)
     }
@@ -15,12 +14,10 @@ class UserApi {
         console.log(error)
     }
 
-
     static fetchUser(){
         const data = {
             name: userName().value
-        }
-        
+        }  
         fetch("http://localhost:3000/users", {
             method: 'POST',
             headers: {
@@ -33,5 +30,4 @@ class UserApi {
             User.findOrCreateByName(json)
         })
     }
-    
 }

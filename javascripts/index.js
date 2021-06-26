@@ -13,9 +13,7 @@ const next = () => document.getElementById("next-button")
 const welcome = () => document.getElementById("welcome")
 const checkAnswer = () => document.getElementById("answer-text")
 const nextButton = () => document.getElementById("next")
-let questionNumber = -1
-
-
+let questionNumber 
 
 document.addEventListener("DOMContentLoaded", () =>{
     buttonStartTrivia().addEventListener("click", handleSubmit)
@@ -26,12 +24,13 @@ const handleSubmit = (e) => {
     UserApi.fetchUser()
     Quiz.createNewQuiz()
     QuestionApi.fetch5Questions()
+    QuizApi.fetchQuiz()
     handleWelcomeUser(userName().value)
-    
+ 
 }
 
 const handleWelcomeUser = (name) => {
-    // UserApi.fetchUsers()
+    
     pageTitle().innerText = `Welcome, ${name}!`
     subtitle().innerText = "Let's play a game of Trivia"
     nameForm().innerHTML = ""
@@ -73,53 +72,46 @@ const startTrivia = (e) => {
     questionElement().classList.remove('hide')
     answersElement().classList.remove('hide')
     clearPreviousQuestion()
-    nextQuestion() 
+    firstQuestion() 
 }
 
-
+const firstQuestion = () => {
+    questionNumber = 0
+    setQuestion(Question.all)
+}
 
 const nextQuestion = () => {
-    fetch('http://localhost:3000/quiz_questions')
-    .then(resp => resp.json())
-    .then(json => {setQuestion(json.slice(-5))
-    })
+    
+    questionNumber = questionNumber + 1
+    setQuestion(Question.all)
 }
 
 function setQuestion(questions) {
-    questionNumber++
+    
     clearPreviousQuestion()
     displayQuestion(questions[questionNumber])
 }
 
 function displayQuestion(question) {
-    fetch(`http://localhost:3000/questions/${question.question_id}`)
-        .then(resp => resp.json())
-        .then(json => {
-            questionElement().innerText = json.text
-                json.answers.forEach(answer =>
-                {{
-                    const button = document.createElement('button')
-                    button.innerText = answer.text 
-                    button.classList.add('btn')
-                    if (answer.correct) {
-                        button.dataset.correct = answer.correct 
-                            }
-                    
-                    button.addEventListener('click', selectAnswer)
-                    answersElement().appendChild(button)
-                }
-            })
-        debugger}
-            
-    )
+    
+    questionElement().innerText = question.text
+    question.findAnswers().forEach(answer => {
+        const button = document.createElement('button')
+        button.innerText = answer.text 
+        button.classList.add('btn')
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener('click', selectAnswer)
+        answersElement().appendChild(button)
+    })
+    debugger
 }
 
-
-
 function selectAnswer(e) {
+    e.preventDefault()
+    e.stopPropagation()
     const selectedAnswer = e.target
-    const correct = selectedAnswer.dataset.correct
-
     if (selectedAnswer.dataset.correct) {
         checkAnswer().innerText = `Congratualtions, this is the correct answer!`
     } else {
@@ -128,14 +120,12 @@ function selectAnswer(e) {
     
     next().classList.remove('hide')
     nextButton().addEventListener("click", (e) => {
-        e.preventDefault()
+        e.stopPropagation()
         checkAnswer().innerText = ""
         
         nextQuestion()
     })
 }
-
-
 
 const clearPreviousQuestion = () => {
     next().classList.add('hide')

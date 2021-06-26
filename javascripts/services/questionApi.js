@@ -11,8 +11,7 @@ class QuestionApi {
         .then(tenOnly => tenOnly.slice(0, 5))
         .then(json => {
             json.forEach(question => {
-                let quizId = User.all[1].id
-                QuestionApi.createQuizQuestions(question.id, quizId)
+                QuestionApi.createQuizQuestions(question.id, Quiz.all[0].id)
             })
         })
     }

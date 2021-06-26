@@ -5,7 +5,7 @@ class Quiz {
     constructor({user_id, id}){
         this.user_id = user_id
         this.id = id 
-        User.all.push(this) 
+        Quiz.all.push(this) 
     }
 
     static getAll() {
@@ -22,6 +22,5 @@ class Quiz {
         .then(resp => resp.json())
         .then(json => QuizApi.saveQuiz(json.length+1))
     }
-
-     
+    
 }

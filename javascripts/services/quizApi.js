@@ -2,11 +2,34 @@ class QuizApi {
     static fetchQuizzes() {
         fetch('http://localhost:3000/quizzes')
         .then(resp => resp.json())
-        .catch(handleError)
+        .then(json => {
+            json.forEach(quiz => {
+                new Quiz(quiz)
+                quiz.questions.forEach(question => {
+                    new Question(question)
+                    question.answers.forEach(answer => {
+                        new Answer(answer)
+                    })
+                })
+            })
+        })
     }
 
     static handleError(error) {
         console.log(error)
+    }
+
+    static fetchQuiz() {
+        fetch('http://localhost:3000/quizzes')
+        .then(resp => resp.json())
+        .then(json => {
+            json[json.length-1].questions.forEach(question => {
+                new Question(question)
+                question.answers.forEach(answer => {
+                    new Answer(answer)
+                })
+            })
+        })
     }
 
 
