@@ -14,6 +14,7 @@ const welcome = () => document.getElementById("welcome")
 const checkAnswer = () => document.getElementById("answer-text")
 const nextButton = () => document.getElementById("next")
 let questionNumber 
+let finalScore = 0
 
 document.addEventListener("DOMContentLoaded", () =>{
     buttonStartTrivia().addEventListener("click", handleSubmit)
@@ -103,7 +104,7 @@ function displayQuestion(question) {
         answersElement().appendChild(button)
     })
     } else {
-    questionElement().innerText = "Congratulations, you finished the quiz. Your score is: "
+    questionElement().innerText = `Congratulations, you finished the quiz. Your score is: ${finalScore/5*100}%`
     }
 }
 
@@ -112,7 +113,9 @@ function selectAnswer(e) {
     e.stopPropagation()
     const selectedAnswer = e.target
     if (selectedAnswer.dataset.correct) {
+        finalScore = finalScore + 1
         checkAnswer().innerText = `Congratualtions, this is the correct answer!`
+    
     } else {
         checkAnswer().innerText = `This answer is wrong.`
     }

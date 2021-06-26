@@ -37,7 +37,8 @@ class QuizApi {
     static saveQuiz(userId) {
         
         const quizData = {
-            user_id: userId
+            user_id: userId,
+            score: 0 
         }
         
         fetch("http://localhost:3000/quizzes", {

@@ -22,5 +22,6 @@ class Quiz {
         .then(resp => resp.json())
         .then(json => QuizApi.saveQuiz(json.length+1))
     }
-    
+
+     
 }
