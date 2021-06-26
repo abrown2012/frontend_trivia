@@ -36,7 +36,6 @@ const handleWelcomeUser = (name) => {
     nameForm().innerHTML = ""
     startButton().classList.remove('hide')
     start().addEventListener("click", startTrivia)
-
 }
 
 const startTrivia = (e) => {
@@ -81,13 +80,11 @@ const firstQuestion = () => {
 }
 
 const nextQuestion = () => {
-    
     questionNumber = questionNumber + 1
     setQuestion(Question.all)
 }
 
 function setQuestion(questions) {
-    
     clearPreviousQuestion()
     displayQuestion(questions[questionNumber])
 }
@@ -105,7 +102,7 @@ function displayQuestion(question) {
         button.addEventListener('click', selectAnswer)
         answersElement().appendChild(button)
     })
-    debugger
+    
 }
 
 function selectAnswer(e) {
@@ -117,14 +114,16 @@ function selectAnswer(e) {
     } else {
         checkAnswer().innerText = `This answer is wrong.`
     }
+    setTimeout(() => { checkAnswer().innerText = ""; }, 2000)
+    setTimeout(() => {  nextQuestion(); }, 2000)
     
-    next().classList.remove('hide')
-    nextButton().addEventListener("click", (e) => {
-        e.stopPropagation()
-        checkAnswer().innerText = ""
-        
-        nextQuestion()
-    })
+    // next().classList.remove('hide')
+    // nextButton().addEventListener("click", (e) => {
+    //     e.preventDefault()
+    //     checkAnswer().innerText = ""
+    //     nextQuestion()
+    //     e.stopPropagation()
+    // })
 }
 
 const clearPreviousQuestion = () => {
