@@ -23,5 +23,6 @@ class User {
         return this.all.find(user => user.name === name)
     }
 
+
   
 }

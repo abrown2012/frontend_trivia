@@ -15,6 +15,26 @@ const checkAnswer = () => document.getElementById("answer-text")
 const nextButton = () => document.getElementById("next")
 let questionNumber 
 let finalScore = 0
+let questionHTML = ` <div id="question-container" >
+    
+<div id="question" class="hide">Question TEST</div>
+
+<div id="answers" class="hide">
+
+    <button class="btn"></button>
+    <button class="btn"></button>
+    <button class="btn"></button>
+    <button class="btn"></button>
+</div>
+<br>
+<div id="answer-text"></div>
+
+<br>
+<button id="next-button" class="hide">
+    Play Again
+</button>
+</div>
+`
 
 document.addEventListener("DOMContentLoaded", () =>{
     buttonStartTrivia().addEventListener("click", handleSubmit)
@@ -46,29 +66,7 @@ const startTrivia = (e) => {
     subtitle().innerText = ""
     welcome().classList.add('hide')
     welcome().innerHTML = ""
-    welcome().innerHTML = 
-    `
-    
-    <div id="question-container" >
-    
-    <div id="question" class="hide">Question TEST</div>
-    
-    <div id="answers" class="hide">
-    
-        <button class="btn"></button>
-        <button class="btn"></button>
-        <button class="btn"></button>
-        <button class="btn"></button>
-    </div>
-    <br>
-    <div id="answer-text"></div>
-    
-    <br>
-    <button id="next-button" class="hide">
-        Play Again
-    </button>
-</div>
-    `
+    welcome().innerHTML = questionHTML
     questionElement().classList.remove('hide')
     answersElement().classList.remove('hide')
     clearPreviousQuestion()
@@ -106,28 +104,7 @@ function displayQuestion(question) {
     } else {
     QuizApi.updateScore()
     questionElement().innerText = `Congratulations, you finished the quiz. Your score is: ${finalScore/5*100}%`
-    next().classList.remove('hide')
-    next().addEventListener("click", () => {
-        welcome.innerHTML = `
-        <h1 id="page-title">Welcome to Trivia!</h1><br>
-        <h2 id="subtitle">Please enter your name:</h2>
-        <div class='name-form' id = 'name-form'>
-            <input type="text" id="user-name" class="user-name"><br/><br>
-            <button id="start-trivia" class="submit-btn">Submit</button><br>
-            <br>
-            <div id="quiz">
-            </div>  
-        </div><br>
-        <div id="start-button" class="hide">
-            <button id="start">Start</button>
-        </div>
-        `
-        Quiz.createNewQuiz()
-        QuestionApi.fetch5Questions()
-        QuizApi.fetchQuiz()
-        handleWelcomeUser(User.all[0].name)
-    })
-}
+    }
 }
 
 function selectAnswer(e) {
