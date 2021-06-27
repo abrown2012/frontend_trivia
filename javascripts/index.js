@@ -18,7 +18,7 @@ let finalScore = 0
 let questionHTML = ` <div id="question-container" >
     
 <div id="question" class="hide">Question TEST</div>
-
+<br>
 <div id="answers" class="hide">
 
     <button class="btn"></button>
@@ -61,6 +61,7 @@ const handleWelcomeUser = (name) => {
 
 const startTrivia = (e) => {
     e.preventDefault()
+    e.stopPropagation()
     startButton().classList.add('hide')
     pageTitle().innerText = ``
     subtitle().innerText = ""

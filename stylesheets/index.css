@@ -32,6 +32,7 @@ body {
     font-family: Monaco;
     width: 82%;
     height: 35%;
+    border-radius: 5px;
 }
 
 .user-name {
@@ -47,6 +48,17 @@ body {
     height: 120%;
     align-content: center;
     text-align: center;
+    border-radius: 5px;
+}
+
+
+.btn {
+    background-color: rgb(192, 139, 241);
+    font-family: Monaco;
+    width: 82%;
+    height: 35%;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
 
