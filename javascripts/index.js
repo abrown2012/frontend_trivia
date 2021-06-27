@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     buttonStartTrivia().addEventListener("click", handleSubmit)
 })
 
-const handleSubmit = (e) => {
-    e.preventDefault()
+const handleSubmit = () => {
+    
     UserApi.fetchUser()
     Quiz.createNewQuiz()
     QuestionApi.fetch5Questions()
@@ -64,9 +64,9 @@ const startTrivia = (e) => {
     <div id="answer-text"></div>
     
     <br>
-    <div id="next-button" class="hide">
-        <button id="next">Next</button>
-    </div>
+    <button id="next-button" class="hide">
+        Play Again
+    </button>
 </div>
     `
     questionElement().classList.remove('hide')
@@ -104,8 +104,30 @@ function displayQuestion(question) {
         answersElement().appendChild(button)
     })
     } else {
+    QuizApi.updateScore()
     questionElement().innerText = `Congratulations, you finished the quiz. Your score is: ${finalScore/5*100}%`
-    }
+    next().classList.remove('hide')
+    next().addEventListener("click", () => {
+        welcome.innerHTML = `
+        <h1 id="page-title">Welcome to Trivia!</h1><br>
+        <h2 id="subtitle">Please enter your name:</h2>
+        <div class='name-form' id = 'name-form'>
+            <input type="text" id="user-name" class="user-name"><br/><br>
+            <button id="start-trivia" class="submit-btn">Submit</button><br>
+            <br>
+            <div id="quiz">
+            </div>  
+        </div><br>
+        <div id="start-button" class="hide">
+            <button id="start">Start</button>
+        </div>
+        `
+        Quiz.createNewQuiz()
+        QuestionApi.fetch5Questions()
+        QuizApi.fetchQuiz()
+        handleWelcomeUser(User.all[0].name)
+    })
+}
 }
 
 function selectAnswer(e) {

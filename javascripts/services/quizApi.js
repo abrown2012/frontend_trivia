@@ -32,13 +32,29 @@ class QuizApi {
         })
     }
 
+    static updateScore() {
+        
+        const quizData = {
+            user_id: User.all[0].id,
+            score: finalScore, 
+            questions: Question.all
+        }
+        fetch(`http://localhost:3000/quizzes/${Quiz.all[0].id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(quizData)
+        })
+    }
+
 
 
     static saveQuiz(userId) {
         
         const quizData = {
             user_id: userId,
-            score: 0 
+            score: 0
         }
         
         fetch("http://localhost:3000/quizzes", {
@@ -66,6 +82,5 @@ class QuizApi {
         })
         .catch(this.handleError)
     }
-
     
 }

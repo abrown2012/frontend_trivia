@@ -2,9 +2,10 @@ class Quiz {
     
     static all = []
 
-    constructor({user_id, id}){
+    constructor({user_id, id, score}){
         this.user_id = user_id
         this.id = id 
+        this.score = 0
         Quiz.all.push(this) 
     }
 
